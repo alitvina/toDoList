@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ToDoList</title>
+<link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+<body>
+  <header>
+    <h1>ToDoList</h1>
+    <form action="/search" method="post">
+        <input id = "search" type="text" name="search" placeholder="search">
+        <!-- <input type="submit" value="go"> -->
+    </form>
+  </header>
+  <section>
+    <form  id="add" action="/add_task" method="post">
+        <dl>
+            <dt class="hidden">Title</dt>
+            <dd class="inblock"><input type="text" name="title" placeholder="Title"></dd>
+            <dt class="hidden">Due</dt>
+            <dd class="inblock" id="due"><input type="text" name="due" placeholder="Due"></dd>
+            <dt class="hidden">Description</dt>
+            <dd><textarea name="description" placeholder="Description"></textarea> </dd>
+        </dl>
+        <input id="addb" type="submit" value="Add">
+    </form>
+
+    {% if tasks|length > 0 %}
+        {% for task in tasks %}
+    <div class="task">
+        <h3 class="inblock">{{task.title}}</h3>
+        <h3 id="duet" class="inblock">Due {{task.due}}</h3>
+        <div class = "task-desc">
+            {{task.description}}
+        </div>
+        <button id="state" onclick="window.location='/change_state?id={{task.id}}';">
+          {{task.state}}
+        </button>
+        <button id="delete"
+            onclick="window.location='/delete?id={{task.id}}';">
+            Delete
+        </button>
+    </div>
+        {% endfor %}
+    {% else %}
+        <i>No tasks yet.</i>
+    {% endif %}
+  </section>
+
+</body>
+</html>
